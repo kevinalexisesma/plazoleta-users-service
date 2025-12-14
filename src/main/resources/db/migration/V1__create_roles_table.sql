@@ -1,0 +1,20 @@
+CREATE TABLE roles (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(32) UNIQUE NOT NULL
+);
+
+CREATE TABLE users (
+  id BIGSERIAL PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  apellido VARCHAR(100) NOT NULL,
+  documento_identidad VARCHAR(30) UNIQUE NOT NULL,
+  celular VARCHAR(13) NOT NULL,
+  fecha_nacimiento DATE NOT NULL,
+  correo VARCHAR(150) UNIQUE NOT NULL,
+  clave_hash VARCHAR(120) NOT NULL,
+  rol_id INT NOT NULL REFERENCES roles(id),
+  estado VARCHAR(20) NOT NULL DEFAULT 'ACTIVO',
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO roles (name) VALUES ('ADMIN'), ('OWNER'), ('EMPLOYEE'), ('CLIENT');
